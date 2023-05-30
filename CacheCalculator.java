@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class CacheCalculator extends Application {
@@ -94,3 +95,20 @@ public class CacheCalculator extends Application {
         launch(args);
     }
 }
+
+class LabelBox extends StackPane {
+
+    private Rectangle rectangle;
+    private Label label;
+
+    public LabelBox(String labelText) {
+        rectangle = new Rectangle(100, 50); // Adjust the width and height as per your requirements
+        rectangle.setFill(Color.LIGHTGRAY);
+
+        label = new Label(labelText);
+        label.setStyle("-fx-font-size: 14px;"); // Adjust the font size as per your requirements
+
+        getChildren().addAll(rectangle, label);
+    }
+}
+
