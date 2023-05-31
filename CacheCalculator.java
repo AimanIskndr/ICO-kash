@@ -23,7 +23,7 @@ public class CacheCalculator extends Application {
     public void start(Stage primaryStage) {
 
         Pane root = new Pane();
-        root.setStyle("-fx-background-color: #2b4457;");
+        root.setStyle("-fx-background-color: #1a1a1a;");
 
         HBox MMBox = new HBox(5);
         Label MMprompt = createLabel("Main Memory Address Size (Gb): ");
