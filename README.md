@@ -37,10 +37,14 @@ JavaFX: The Cache Calculator relies on JavaFX for the graphical user interface. 
 5. You can modify the input parameters and click on a different mapping technique button to recalculate the cache mapping sizes.
 6. Close the application window when finished.
 
-##### Sample Run
-![Sample Run](https://media.discordapp.net/attachments/954699219485212712/1058198956380794941/Capture.PNG)
+#### Sample Run
 
+##### Direct Mapping
+![Sample Run](https://media.discordapp.net/attachments/1110942392175038554/1113629377670951043/image.png?width=868&height=663)
 
+##### Fully/Associative Mapping
+![Sample Run](https://media.discordapp.net/attachments/1110942392175038554/1113629972259676232/image.png?width=880&height=663)
 
-### Remarks
+##### Set-Associative Mapping
+![Sample Run](https://media.discordapp.net/attachments/1110942392175038554/1113629153862877275/image.png?width=856&height=663)
 
