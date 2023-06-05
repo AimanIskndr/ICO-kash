@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
@@ -68,7 +67,9 @@ public class CacheCalculator extends Application {
         BitsBox.setTranslateY(400);
         
         DMapBtn.setOnAction(e -> {
-            if (checkFields(MMsize, CMsize, WordSize)) {
+        	
+            if(!(!checkFields(MMsize) || !checkFields(CMsize) || !checkFields(WordSize, false))){
+            	
                 int MMbits = 30 + (int) (Math.log(Double.parseDouble(MMsize.getText())) / Math.log(2));
                 int Cachebits = 20 + (int) (Math.log(Double.parseDouble(CMsize.getText())) / Math.log(2));
                 int Wordbits = (int) (Math.log(Double.parseDouble(WordSize.getText()) * 8.0) / Math.log(2));
@@ -77,6 +78,7 @@ public class CacheCalculator extends Application {
                 int lineBits = Cachebits - Wordbits;
 
                 BitsBox.getChildren().clear();
+                KsetWay.setStyle("");
 
                 LabelBox tagBox = new LabelBox("  Tag\n" + tagBits + " bits", (600.0 * tagBits/MMbits));
                 LabelBox lineBox = new LabelBox("  Line\n" + lineBits + " bits", (600.0 * lineBits/MMbits));
@@ -87,12 +89,15 @@ public class CacheCalculator extends Application {
         });
 
         FAMapBtn.setOnAction(e -> {
-            if (checkFields(MMsize, CMsize, WordSize)) {
+        	
+            if(checkFields(MMsize) && checkFields(CMsize) && checkFields(WordSize, false)){
+            	
                 int MMbits = 30 + (int) (Math.log(Double.parseDouble(MMsize.getText())) / Math.log(2));
                 int Wordbits = (int) (Math.log(Double.parseDouble(WordSize.getText()) * 8.0) / Math.log(2));
                 int tagBits = MMbits - Wordbits;
 
                 BitsBox.getChildren().clear();
+                KsetWay.setStyle("");
 
                 LabelBox tagBox = new LabelBox("  Tag\n" + tagBits + " bits", (600.0 * tagBits/MMbits));
                 LabelBox wordBox = new LabelBox("Word\n" + Wordbits + " bits", (600.0 * Wordbits/MMbits));
@@ -101,7 +106,9 @@ public class CacheCalculator extends Application {
         });
 
         SAMapBtn.setOnAction(e -> {
-            if (checkFields(MMsize, CMsize, WordSize, KsetWay)) {
+        	
+            if(checkFields(MMsize) && checkFields(CMsize) && checkFields(WordSize, false) && checkFields(KsetWay, true)){
+            	
                 int MMbits = 30 + (int) (Math.log(Double.parseDouble(MMsize.getText())) / Math.log(2));
                 int Cachebits = 20 + (int) (Math.log(Double.parseDouble(CMsize.getText()) / Double.parseDouble(KsetWay.getText())) / Math.log(2));
                 int Wordbits = (int) (Math.log(Double.parseDouble(WordSize.getText()) * 8.0) / Math.log(2));
@@ -120,7 +127,7 @@ public class CacheCalculator extends Application {
         });
 
         root.getChildren().addAll(MMBox, CMBox, WordBox, KSetBox, BtnBox, BitsBox);
-       
+
         Scene scene = new Scene(root, 800, 600);
 
         primaryStage.setTitle("Cache Calculator");
@@ -143,12 +150,57 @@ public class CacheCalculator extends Application {
         return button;
     }
     
-    private boolean checkFields(TextField t1, TextField t2, TextField t3) {
-        return !t1.getText().isEmpty() && !t2.getText().isEmpty() && !t3.getText().isEmpty();
+    private boolean checkFields(TextField field){
+    	
+    	if(field.getText().isEmpty()){
+    		field.setStyle("-fx-border-color: red;");
+            return false;
+    	}
+        
+        try {
+            double value = (Math.log(Double.parseDouble(field.getText())) / Math.log(2));
+            if(value != (int) value){
+                field.setStyle("-fx-border-color: red;");
+                return false;
+            }
+            else {
+                field.setStyle("");
+            }
+        } catch (NumberFormatException e) {
+            field.setStyle("-fx-border-color: red;");
+            return false;
+        }
+        return true;
     }
     
-    private boolean checkFields(TextField t1, TextField t2, TextField t3, TextField t4) {
-        return !t1.getText().isEmpty() && !t2.getText().isEmpty() && !t3.getText().isEmpty() && !t4.getText().isEmpty();
+    private boolean checkFields(TextField field, boolean flag){
+    	
+    	if(field.getText().isEmpty()){
+    		field.setStyle("-fx-border-color: red;");
+            return false;
+    	}
+        
+        try {
+            double value = Double.parseDouble(field.getText());
+            
+            if(value <= 0 || (flag && value <= 1)){
+                field.setStyle("-fx-border-color: red;");
+                return false;
+            }
+            
+            if(flag) {
+            	value = Math.log(value) / Math.log(2);
+            	if(value != (int) value) return false;
+            }
+            
+            else {
+                field.setStyle("");
+            }
+        } catch (NumberFormatException e) {
+            field.setStyle("-fx-border-color: red;");
+            return false;
+        }
+        return true;
     }
     
     class LabelBox extends StackPane {
