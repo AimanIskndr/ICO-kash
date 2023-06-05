@@ -25,14 +25,14 @@ public class CacheCalculator extends Application {
         root.setStyle("-fx-background-color: #1E1E1A;");
 
         HBox MMBox = new HBox(5);
-        Label MMprompt = createLabel("Main Memory Address Size (Gb): ");
+        Label MMprompt = createLabel("Main Memory Address Size (GB): ");
         TextField MMsize = new TextField();
         MMBox.getChildren().addAll(MMprompt, MMsize);
         MMBox.setTranslateX(185);
         MMBox.setTranslateY(80);
 
         HBox CMBox = new HBox(68);
-        Label CMprompt = createLabel("Cache Memory Size (Mb): ");
+        Label CMprompt = createLabel("Cache Memory Size (MB): ");
         TextField CMsize = new TextField();
         CMBox.getChildren().addAll(CMprompt, CMsize);
         CMBox.setTranslateX(185);
